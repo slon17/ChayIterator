@@ -34,9 +34,29 @@ public class NodeMain implements INode<INode> {
         return nodeDownRight;
     }
 
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public void setNodeUpLeft(INode nodeUpLeft) {
+        this.nodeUpLeft = nodeUpLeft;
+    }
+
+    public void setNodeUpRight(INode nodeUpRight) {
+        this.nodeUpRight = nodeUpRight;
+    }
+
+    public void setNodeDownLeft(INode nodeDownLeft) {
+        this.nodeDownLeft = nodeDownLeft;
+    }
+
+    public void setNodeDownRight(INode nodeDownRight) {
+        this.nodeDownRight = nodeDownRight;
+    }
+
     @Override
     public IIterator<INode> getIterator() {
-        return null;
+        return new weirdIterator();
     }
 
     private class weirdIterator implements IIterator<INode>{

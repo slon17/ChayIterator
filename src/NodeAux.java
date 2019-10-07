@@ -22,8 +22,33 @@ public class NodeAux implements INode<INode> {
         return nodeRight;
     }
 
+    public void setDato(int dato) {
+        this.dato = dato;
+    }
+
+    public void setNodeLeft(INode nodeLeft) {
+        this.nodeLeft = nodeLeft;
+    }
+
+    public void setNodeRight(INode nodeRight) {
+        this.nodeRight = nodeRight;
+    }
+
     @Override
     public IIterator<INode> getIterator() {
-        return null;
+        return new weirdIterator();
+    }
+
+    private class weirdIterator implements IIterator<INode>{
+
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public INode next() {
+            return null;
+        }
     }
 }
