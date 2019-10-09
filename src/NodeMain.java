@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class NodeMain implements INode<INode> {
 
     private int dato;
@@ -5,6 +7,7 @@ public class NodeMain implements INode<INode> {
     private INode nodeUpRight;
     private INode nodeDownLeft;
     private INode nodeDownRight;
+    private ArrayList<INode> visitedNodes;
 
     public NodeMain(int dato, INode nodeUpLeft, INode nodeUpRight, INode nodeDownLeft, INode nodeDownRight) {
         this.dato = dato;
@@ -12,8 +15,31 @@ public class NodeMain implements INode<INode> {
         this.nodeUpRight = nodeUpRight;
         this.nodeDownLeft = nodeDownLeft;
         this.nodeDownRight = nodeDownRight;
+        this.visitedNodes=new ArrayList<>();
     }
 
+    public NodeMain() {
+        this.visitedNodes=new ArrayList<>();
+    }
+
+    @Override
+    public int getValue(){
+        return dato;
+    }
+
+    @Override
+    public void setAux(INode node) {
+        setNodeUpRight(node);
+    }
+
+    @Override
+    public void setAux2(INode node) {
+        setNodeDownRight(node);
+    }
+
+    public void addVisited(INode node){
+        visitedNodes.add(node);
+    }
     public int getDato() {
         return dato;
     }
@@ -54,21 +80,62 @@ public class NodeMain implements INode<INode> {
         this.nodeDownRight = nodeDownRight;
     }
 
+    public int getAuxAmount(){
+        int i = 0;
+            if(nodeUpLeft!=null){
+                i++;
+            }
+            if(nodeDownRight!=null){
+                i++;
+            }
+            if(nodeDownLeft!=null){
+                i++;
+            }
+            if(nodeUpRight!=null){
+                i++;
+            }
+            return i;
+    }
+
     @Override
     public IIterator<INode> getIterator() {
         return new weirdIterator();
     }
 
     private class weirdIterator implements IIterator<INode>{
+        int visited=0;
+
 
         @Override
         public boolean hasNext() {
-            return false;
+            if(visitedNodes.size()<getAuxAmount()) return true;
+            else return false;
         }
 
         @Override
         public INode next() {
-            return null;
+            INode next=null;
+                if(nodeUpLeft!=null && !visitedNodes.contains(nodeUpLeft)){
+                    next=nodeUpLeft;
+
+                }
+                else if(nodeDownLeft!=null && !visitedNodes.contains(nodeDownLeft)){
+                    next=nodeDownLeft;
+                }
+                else if(nodeUpRight!=null && !visitedNodes.contains(nodeUpRight)){
+                    next=nodeUpRight;
+                    NodeAux aux =(NodeAux) nodeUpRight;
+                    NodeMain aux2 = (NodeMain) aux.getNodeRight();
+                    aux2.addVisited(nodeUpRight);
+                }
+                else if(nodeDownRight!=null){
+                    next=nodeDownRight;
+                    NodeAux aux =(NodeAux) nodeUpRight;
+                    NodeMain aux2 = (NodeMain) aux.getNodeRight();
+                    aux2.addVisited(nodeUpRight);
+                }
+            visitedNodes.add(next);
+            return next;
         }
     }
 }
