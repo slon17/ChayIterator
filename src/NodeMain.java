@@ -132,7 +132,7 @@ public class NodeMain implements INode<INode> {
                     next=nodeDownRight;
                     NodeAux aux =(NodeAux) nodeUpRight;
                     NodeMain aux2 = (NodeMain) aux.getNodeRight();
-                    aux2.addVisited(nodeUpRight);
+                    aux2.addVisited(next);
                 }
             visitedNodes.add(next);
             return next;
