@@ -73,10 +73,10 @@ public class NodeAux implements INode<INode> {
 
     @Override
     public IIterator<INode> getIterator() {
-        return new weirdIterator() ;
+        return new WeirdIterator() ;
     }
 
-    private class weirdIterator implements IIterator<INode> {
+    private class WeirdIterator implements IIterator<INode> {
         int visited=0;
         ArrayList<INode> visitedNodes=new ArrayList<>();
         @Override
@@ -97,7 +97,7 @@ public class NodeAux implements INode<INode> {
 
             if(nodeRight!=null){
                 if(nodeRight.getNodeDownLeft()!=null && nodeRight.getNodeDownLeft()!= NodeAux.this){
-                    next=(INode) nodeRight.getNodeDownLeft();
+                    next= nodeRight.getNodeDownLeft();
                     nodeRight.addVisited(next);
                 }
 
